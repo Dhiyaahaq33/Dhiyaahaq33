@@ -18,15 +18,6 @@
 
 ---
 
-### 📊 GitHub Analytics
-
-<p align="left">
-  <img src="https://github-readme-stats.vercel.app/api?username=Dhiyaahaq33&show_icons=true&theme=github_dark&hide_border=true&count_private=true" height="160"/>
-  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=Dhiyaahaq33&layout=donut&theme=github_dark&hide_border=true" height="160"/>
-</p>
-
----
-
 ### 📌 Featured Projects
 
 **[AXANCTUM INTELLIGENCE 911](https://github.com/Dhiyaahaq33/AXANCTUM-INTELLIGENCE-911)**
