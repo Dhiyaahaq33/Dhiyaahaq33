@@ -1,8 +1,11 @@
 ## 👋 Hi, I'm Muhammad Yahya
 
 🤖 Interested in **algorithmic trading**, **AI systems**, and **backend engineering**
+
 📈 Currently building **crypto futures simulation** & **AI quant trading platforms**
+
 🚀 Deploying real systems — not just notebooks
+
 📍 From Indonesia
 
 ---
