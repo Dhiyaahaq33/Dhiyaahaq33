@@ -20,9 +20,6 @@
 
 ### 📌 Featured Projects
 
-**[AXANCTUM INTELLIGENCE 911](https://github.com/Dhiyaahaq33/AXANCTUM-INTELLIGENCE-911)**
-> Crypto futures simulation engine · Live Binance WebSocket · Auto TP/SL · Real-time PnL · FastAPI + PostgreSQL
-
 **[QuantDingerCahyo](https://github.com/Dhiyaahaq33/QuantDingerCahyo)**
 > AI quant trading platform · Backtesting · Multi-agent LLM · 10+ exchange support · Docker + Vue.js
 
