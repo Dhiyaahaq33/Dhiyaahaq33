@@ -13,7 +13,7 @@
 ### 🛠 My Tech Stack
 
 <p align="left">
-  <img src="https://skillicons.dev/icons?i=python,fastapi,postgres,docker,js,html,redis,nextjs,ts&theme=dark" />
+  <img src="https://skillicons.dev/icons?i=python,fastapi,nextjs,react,vue,ts,js,html,tailwind,postgres,supabase,redis,docker,githubactions&theme=dark" />
 </p>
 
 ---
@@ -87,7 +87,7 @@ WS   /ws/zones/{zone_id}/live   → real-time sensor WebSocket
 | **4** | Production — Docker, CI/CD, RAG, deploy configs | ✅ |
 
 #### Tech Stack
-`Python` `FastAPI` `Next.js` `React` `TypeScript` `Tailwind CSS` `PostgreSQL` `Supabase` `MQTT` `HiveMQ` `Docker` `Sentry` `PostHog` `Gemini API` `WebSocket` `GitHub Actions`
+`Python` `FastAPI` `Next.js` `React` `TypeScript` `Tailwind CSS` `PostgreSQL` `Supabase` `Redis` `MQTT` `HiveMQ` `Docker` `Sentry` `PostHog` `Gemini API` `WebSocket` `GitHub Actions`
 
 </details>
 
