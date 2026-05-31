@@ -13,7 +13,8 @@
 ### 🛠 My Tech Stack
 
 <p align="left">
-  <img src="https://skillicons.dev/icons?i=python,fastapi,nextjs,react,vue,ts,js,html,tailwind,postgres,supabase,redis,docker,githubactions&theme=dark" />
+  <img src="https://skillicons.dev/icons?i=python,fastapi,nextjs,react,vue,ts,js,html,
+    tailwind,postgres,supabase,redis,docker,githubactions&theme=dark" />
 </p>
 
 ---
