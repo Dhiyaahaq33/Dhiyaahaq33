@@ -93,4 +93,13 @@ WS   /ws/zones/{zone_id}/live   → real-time sensor WebSocket
 
 ---
 
+### 🔧 Tools & References (forked, unmodified)
+
+Cloned for daily use / study — not original work.
+
+- **[ruflo](https://github.com/Dhiyaahaq33/ruflo)**, **[ponytail](https://github.com/Dhiyaahaq33/ponytail)**, **[career-ops](https://github.com/Dhiyaahaq33/career-ops)**, **[ui-ux-pro-max-skill](https://github.com/Dhiyaahaq33/ui-ux-pro-max-skill)** — Claude Code agent tooling
+- **[qlib](https://github.com/Dhiyaahaq33/qlib)**, **[gs-quant](https://github.com/Dhiyaahaq33/gs-quant)**, **[machine-learning-for-trading](https://github.com/Dhiyaahaq33/machine-learning-for-trading)**, **[TradingAgents](https://github.com/Dhiyaahaq33/TradingAgents)**, **[awesome-quant](https://github.com/Dhiyaahaq33/awesome-quant)** — quant research references
+
+---
+
 *⚡ Markets are data problems. Solve them with code.*
