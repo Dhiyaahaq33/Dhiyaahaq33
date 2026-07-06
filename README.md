@@ -20,16 +20,16 @@
 
 ### 📌 Featured Projects
 
-**[QuantDingerCahyo](https://github.com/Dhiyaahaq33/QuantDingerCahyo)**
-> AI quant trading platform · Backtesting · Multi-agent LLM · 10+ exchange support · Docker + Vue.js
+**[Agent-Sales-Woodchar](https://github.com/Dhiyaahaq33/Agent-Sales-Woodchar)**
+> Autonomous B2B sales pipeline for charcoal export · 7 AI agents (CrewAI) · lead scraping, Gemini outreach, PDF quotes, Telegram reports
 
-**[ATRADEX](https://github.com/Dhiyaahaq33/ATRADEX)**
-> Automated trading bot · Real-time market data · Signal execution pipeline
+**ATRADEX** *(private)*
+> Automated trading bot · FastAPI + WebSocket · Real-time market data · Signal execution pipeline
 
-**[FUTURE-MARKET](https://github.com/Dhiyaahaq33/FUTURE-MARKET)**
-> Futures price prediction · ML models · Feature engineering
+**FUTURE-MARKET** *(private)*
+> Futures price prediction bot · Flask + ccxt · Telegram alerts
 
-**[AgriTwin](https://github.com/Dhiyaahaq33/AgriTwin)** 🌱
+**[AgriTwin](https://github.com/Dhiyaahaq33/agritwin)** 🌱
 > AI greenhouse digital twin platform — production-grade evolution from 17K-line Streamlit monolith
 
 <details>
