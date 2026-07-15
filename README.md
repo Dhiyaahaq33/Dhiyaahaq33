@@ -1,4 +1,4 @@
-## 👋 Hi, I'm Muhammad Yahya
+## Muhammad Yahya
 
 🤖 Algorithmic trading, AI systems, backend engineering — 📍 Indonesia
 
