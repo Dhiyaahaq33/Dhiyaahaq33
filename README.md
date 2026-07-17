@@ -1,32 +1,38 @@
 ## Muhammad Yahya
 
-🤖 Algorithmic trading, AI systems, backend engineering — 📍 Indonesia
+Algorithmic trading, AI systems, backend engineering — Bogor, Indonesia
 
-🚀 Deploying real systems, not just notebooks
+Deploying real systems, not just notebooks.
 
 ---
 
-### 🛠 Tech Stack
+### Tech Stack
 
 <p align="left">
-  <img src="https://skillicons.dev/icons?i=python,fastapi,flask,nextjs,react,ts,js,html,tailwind,postgres,supabase,docker,githubactions,go,rust,jupyter&theme=dark" />
+  <img src="https://skillicons.dev/icons?i=python,fastapi,flask,nextjs,react,ts,js,html,tailwind,postgres,supabase,docker,githubactions,go,rust,cpp,powershell,jupyter&theme=dark" />
 </p>
+
+<sub>Also working with **MQL4/MQL5** (MetaTrader Expert Advisors) and **MediaPipe** (real-time gesture/vision).</sub>
 
 ---
 
-### 📌 Projects (own work)
+### Projects (own work)
 
 | Project | Stack | What it does |
 |---|---|---|
-| **[AgriTwin](https://github.com/Dhiyaahaq33/agritwin)** 🌱 | FastAPI · Next.js/React · Supabase · MQTT · Gemini RAG · Docker | Greenhouse digital twin — IoT sensors, AI agronomist, market prices, migrated from a 15.6K-line Streamlit monolith |
+| **[AgriTwin](https://github.com/Dhiyaahaq33/agritwin)** | FastAPI · Next.js/React · Supabase · MQTT · Gemini RAG · Docker | Greenhouse digital twin — IoT sensors, AI agronomist, market prices, migrated from a 15.6K-line Streamlit monolith |
 | **[Agent-Sales-Woodchar](https://github.com/Dhiyaahaq33/Agent-Sales-Woodchar)** | CrewAI · Gemini/Groq · Gmail/Sheets API | 7-agent autonomous B2B sales pipeline for charcoal export — scraping, outreach, PDF quotes, Telegram reports |
+| **[forex-scalp-bot](https://github.com/Dhiyaahaq33/forex-scalp-bot)** | MQL4/MQL5 | Modular scalping EA — risk management, entry signal, news/session filters as separate includes |
+| **[MPD-SAG](https://github.com/Dhiyaahaq33/MPD-SAG)** | Python · C++ · MediaPipe · MQTT | Gesture-triggered smart agriculture IoT demo — vision-based activation, live NDVI panel |
 | **ATRADEX** *(private)* | FastAPI · WebSocket · asyncpg · Supabase | Automated crypto trading bot — real-time market data, signal execution |
 | **FUTURE-MARKET** *(private)* | Flask · ccxt · Telegram Bot API | Futures price prediction & alert bot |
-| **binance-intelligence**, **automatic_trade** *(private)* | Python | Crypto trading/market-data utilities |
+| **binance-intelligence**, **automatic_trade**, **bandar-broksum** *(private)* | Python | Crypto & equity market-intelligence utilities |
+
+<sub>Plus 10+ smaller experimental trading/automation bots across [public repos](https://github.com/Dhiyaahaq33?tab=repositories).</sub>
 
 ---
 
-### 🔧 Forked (tools I use / study, unmodified)
+### Forked (tools I use / study, unmodified)
 
 **Agent tooling:** [ruflo](https://github.com/Dhiyaahaq33/ruflo), [ponytail](https://github.com/Dhiyaahaq33/ponytail), [career-ops](https://github.com/Dhiyaahaq33/career-ops), [ui-ux-pro-max-skill](https://github.com/Dhiyaahaq33/ui-ux-pro-max-skill), [free-claude-code](https://github.com/Dhiyaahaq33/free-claude-code)
 
@@ -36,4 +42,4 @@
 
 ---
 
-*⚡ Markets are data problems. Solve them with code.*
+*Markets are data problems. Solve them with code.*
