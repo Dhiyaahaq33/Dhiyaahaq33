@@ -22,10 +22,10 @@ Deploying real systems, not just notebooks.
 |---|---|---|
 | **[AgriTwin](https://github.com/Dhiyaahaq33/agritwin)** | FastAPI · Next.js/React · Supabase · MQTT · Gemini RAG · Docker | Greenhouse digital twin — IoT sensors, AI agronomist, market prices, migrated from a 15.6K-line Streamlit monolith |
 | **[Agent-Sales-Woodchar](https://github.com/Dhiyaahaq33/Agent-Sales-Woodchar)** | CrewAI · Gemini/Groq · Gmail/Sheets API | 7-agent autonomous B2B sales pipeline for charcoal export — scraping, outreach, PDF quotes, Telegram reports |
-| **[forex-scalp-bot](https://github.com/Dhiyaahaq33/forex-scalp-bot)** | MQL4/MQL5 | Modular scalping EA — risk management, entry signal, news/session filters as separate includes |
-| **[MPD-SAG](https://github.com/Dhiyaahaq33/MPD-SAG)** | Python · C++ · MediaPipe · MQTT | Gesture-triggered smart agriculture IoT demo — vision-based activation, live NDVI panel |
 | **ATRADEX** *(private)* | FastAPI · WebSocket · asyncpg · Supabase | Automated crypto trading bot — real-time market data, signal execution |
+| **[forex-scalp-bot](https://github.com/Dhiyaahaq33/forex-scalp-bot)** | MQL4/MQL5 | Modular scalping EA — risk management, entry signal, news/session filters as separate includes |
 | **FUTURE-MARKET** *(private)* | Flask · ccxt · Telegram Bot API | Futures price prediction & alert bot |
+| **[MPD-SAG](https://github.com/Dhiyaahaq33/MPD-SAG)** | Python · C++ · MediaPipe · MQTT | Gesture-triggered smart agriculture IoT demo — vision-based activation, live NDVI panel |
 | **binance-intelligence**, **automatic_trade**, **bandar-broksum** *(private)* | Python | Crypto & equity market-intelligence utilities |
 
 <sub>Plus 10+ smaller experimental trading/automation bots across [public repos](https://github.com/Dhiyaahaq33?tab=repositories).</sub>
