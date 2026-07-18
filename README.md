@@ -9,7 +9,7 @@ Deploying real systems, not just notebooks.
 ### Tech Stack
 
 <p align="left">
-  <img src="https://skillicons.dev/icons?i=python,fastapi,flask,nextjs,react,ts,js,html,tailwind,postgres,supabase,docker,githubactions,go,rust,cpp,powershell,jupyter&theme=dark" />
+  <img src="https://skillicons.dev/icons?i=python,fastapi,flask,nextjs,react,vue,ts,js,html,tailwind,postgres,supabase,php,docker,githubactions,go,rust,cpp,powershell,jupyter&theme=dark" />
 </p>
 
 <sub>Also working with **MQL4/MQL5** (MetaTrader Expert Advisors) and **MediaPipe** (real-time gesture/vision).</sub>
