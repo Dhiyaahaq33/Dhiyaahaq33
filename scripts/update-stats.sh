@@ -36,7 +36,7 @@ awk '{
 END { for (e in sum) print sum[e], e }' "$WORKDIR/all_lines.txt" | sort -rn | head -10 > "$WORKDIR/top_ext.txt"
 
 {
-  printf '**%s total**\n\n' "$(printf "%'d" "$TOTAL" 2>/dev/null || echo "$TOTAL")"
+  printf '**%s total**\n\n' "$TOTAL"
   echo "| Language | Lines | Share |"
   echo "|---|---|---|"
   while read -r lines ext; do
@@ -46,28 +46,41 @@ END { for (e in sum) print sum[e], e }' "$WORKDIR/all_lines.txt" | sort -rn | he
 } > "$WORKDIR/loc_block.md"
 
 # ---- external contributions (PRs on repos NOT owned by the user, forks excluded by definition) ----
-gh api "search/issues?q=author:$OWNER+type:pr&per_page=100" \
-  --jq --arg owner "$OWNER" '.items[] | select((.repository_url | split("/")[-2]) != $owner) |
-    {repo: (.repository_url | split("/")[-2] + "/" + (.repository_url | split("/")[-1])), url: .html_url, merged: (.pull_request.merged_at != null), title: .title}' \
-  > "$WORKDIR/ext_prs.jsonl" || true
+# NOTE: gh api's --jq does not accept extra jq flags like --arg on the same call.
+# Fetch raw items first, then filter with a separate jq invocation.
+gh api "search/issues?q=author:${OWNER}+type:pr&per_page=100" --jq '.items' > "$WORKDIR/raw_prs.json" || echo "[]" > "$WORKDIR/raw_prs.json"
 
-MERGED_LINES=$(jq -r 'select(.merged==true) | "[" + .repo + "](" + .url + ") — " + .title' "$WORKDIR/ext_prs.jsonl")
-OPEN_REPOS=$(jq -r 'select(.merged==false) | .repo' "$WORKDIR/ext_prs.jsonl" | sort -u)
-MERGED_COUNT=$(jq -r 'select(.merged==true)' "$WORKDIR/ext_prs.jsonl" | jq -s 'length')
-OPEN_COUNT=$(jq -rs 'map(select(.merged==false)) | length' "$WORKDIR/ext_prs.jsonl")
+jq --arg owner "$OWNER" -c '
+  .[] | select((.repository_url | split("/")[-2]) != $owner) |
+  {
+    repo: (.repository_url | split("/")[-2] + "/" + (.repository_url | split("/")[-1])),
+    url: .html_url,
+    merged: (.pull_request.merged_at != null),
+    title: .title
+  }
+' "$WORKDIR/raw_prs.json" > "$WORKDIR/ext_prs.jsonl"
+
+MERGED_COUNT=$(jq -s '[.[] | select(.merged==true)] | length' "$WORKDIR/ext_prs.jsonl")
+OPEN_COUNT=$(jq -s '[.[] | select(.merged==false)] | length' "$WORKDIR/ext_prs.jsonl")
 
 {
   if [ "$MERGED_COUNT" -gt 0 ]; then
-    printf '**✅ Merged (%s):** ' "$MERGED_COUNT"
+    printf '**Merged (%s):** ' "$MERGED_COUNT"
     jq -r 'select(.merged==true) | "[" + .repo + "](" + .url + ") — " + .title' "$WORKDIR/ext_prs.jsonl" | paste -sd, - | sed 's/,/, /g'
-    printf '\n\n'
   else
-    echo "**✅ Merged (0):** none yet."
-    echo ""
+    printf '**Merged (0):** none yet.'
   fi
+  printf '\n\n'
   if [ "$OPEN_COUNT" -gt 0 ]; then
-    printf '**⏳ Open / pending review (%s):** ' "$OPEN_COUNT"
-    jq -rs 'map(select(.merged==false)) | group_by(.repo) | map("[" + .[0].repo + "](https://github.com/" + .[0].repo + "/pulls" + (if length>1 then ") (x" + (length|tostring) + ")" else ")" end)) | join(", ")' "$WORKDIR/ext_prs.jsonl"
+    printf '**Open / pending review (%s):** ' "$OPEN_COUNT"
+    jq -rs '
+      map(select(.merged==false)) | group_by(.repo) |
+      map("[" + .[0].repo + "](https://github.com/" + .[0].repo + "/pulls" +
+          (if length > 1 then ") (x" + (length|tostring) + ")" else ")" end)) |
+      join(", ")
+    ' "$WORKDIR/ext_prs.jsonl"
+  else
+    printf '**Open / pending review (0):** none.'
   fi
 } > "$WORKDIR/contrib_block.md"
 
