@@ -34,8 +34,9 @@ Deploying real systems, not just notebooks.
 
 ### Lines of Code
 
-Counted across all 26 own repositories (own work only, forks excluded).
+Counted across all own repositories (own work only, forks excluded). Auto-refreshed daily.
 
+<!-- LOC-START -->
 **116,355 total**
 
 | Language | Lines | Share |
@@ -50,16 +51,19 @@ Counted across all 26 own repositories (own work only, forks excluded).
 | MQH (MQL includes) | 713 | 0.6% |
 | MQ5 (MetaTrader) | 676 | 0.6% |
 | Pine Script | 543 | 0.5% |
+<!-- LOC-END -->
 
 ---
 
 ### External Contributions
 
-Pull requests opened on other people's public repos (not forks — real upstream projects).
+Pull requests opened on other people's public repos (not forks — real upstream projects). Auto-refreshed daily.
 
+<!-- CONTRIB-START -->
 **✅ Merged (1):** [squidKid-deluxe/QTradeX-Algo-Trading-SDK](https://github.com/squidKid-deluxe/QTradeX-Algo-Trading-SDK/pull/8) — added Awesome Oscillator indicator
 
 **⏳ Open / pending review (13):** [freqtrade/freqtrade](https://github.com/freqtrade/freqtrade/pull/13359), [AI4Finance-Foundation/FinRobot](https://github.com/AI4Finance-Foundation/FinRobot/pull/111), [AI4Finance-Foundation/FinRL-Meta](https://github.com/AI4Finance-Foundation/FinRL-Meta/pull/363), [pkjmesra/PKScreener](https://github.com/pkjmesra/PKScreener/pulls) (x2), [51bitquant/binance_grid_trader](https://github.com/51bitquant/binance_grid_trader/pull/39), [al1enjesus/polymarket-whales](https://github.com/al1enjesus/polymarket-whales/pull/12), [cunarist/solie](https://github.com/cunarist/solie/pulls) (x2), [squidKid-deluxe/QTradeX-Algo-Trading-SDK](https://github.com/squidKid-deluxe/QTradeX-Algo-Trading-SDK/pull/9), [diogomatoschaves/MyCryptoBot](https://github.com/diogomatoschaves/MyCryptoBot/pull/193), [himanshu2406/Algo.Py](https://github.com/himanshu2406/Algo.Py/pull/26), [HammerGPT/Hyper-Alpha-Arena](https://github.com/HammerGPT/Hyper-Alpha-Arena/pull/69), [whchien/ai-trader](https://github.com/whchien/ai-trader/pull/17)
+<!-- CONTRIB-END -->
 
 ---
 
