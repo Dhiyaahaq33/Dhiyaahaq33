@@ -22,83 +22,98 @@ find "$WORKDIR" -type f \
   -not -iname "*.exe" -not -iname "*.dll" -not -iname "*.pyc" \
   -print0 | xargs -0 wc -l 2>/dev/null | grep -v " total$" > "$WORKDIR/all_lines.txt" || true
 
-TOTAL=$(awk '{s+=$1} END {print s+0}' "$WORKDIR/all_lines.txt")
+# ---- fetch external PRs as raw JSON (no jq filtering here — do it in Python below) ----
+gh api "search/issues?q=author:${OWNER}+type:pr&per_page=100" > "$WORKDIR/search_result.json" 2>/dev/null || echo '{"items":[]}' > "$WORKDIR/search_result.json"
 
-awk '{
-  lines=$1; $1="";
-  path=$0; sub(/^ /, "", path);
-  n=split(path, parts, "/");
-  fname=parts[n];
-  extidx=match(fname, /\.[^.]+$/);
-  if (extidx>0) { ext=substr(fname, extidx+1) } else { ext="(no ext)" }
-  sum[ext]+=lines
-}
-END { for (e in sum) print sum[e], e }' "$WORKDIR/all_lines.txt" | sort -rn | head -10 > "$WORKDIR/top_ext.txt"
+# ---- everything else: compute LOC breakdown, filter PRs, splice into README.md ----
+OWNER="$OWNER" python3 - "$WORKDIR/all_lines.txt" "$WORKDIR/search_result.json" README.md <<'PY'
+import sys, os, re, json
+from collections import defaultdict
 
-{
-  printf '**%s total**\n\n' "$TOTAL"
-  echo "| Language | Lines | Share |"
-  echo "|---|---|---|"
-  while read -r lines ext; do
-    pct=$(awk -v l="$lines" -v t="$TOTAL" 'BEGIN { printf "%.1f", (t>0 ? l*100/t : 0) }')
-    printf '| %s | %s | %s%% |\n' "$ext" "$lines" "$pct"
-  done < "$WORKDIR/top_ext.txt"
-} > "$WORKDIR/loc_block.md"
+lines_path, search_path, readme_path = sys.argv[1], sys.argv[2], sys.argv[3]
+owner = os.environ["OWNER"]
 
-# ---- external contributions (PRs on repos NOT owned by the user, forks excluded by definition) ----
-# NOTE: gh api's --jq does not accept extra jq flags like --arg on the same call.
-# Fetch raw items first, then filter with a separate jq invocation.
-gh api "search/issues?q=author:${OWNER}+type:pr&per_page=100" --jq ".items" > "$WORKDIR/raw_prs.json" 2>/dev/null || echo "[]" > "$WORKDIR/raw_prs.json"
-jq -e 'type == "array"' "$WORKDIR/raw_prs.json" >/dev/null 2>&1 || echo '[]' > "$WORKDIR/raw_prs.json"
+# --- Lines of Code ---
+ext_totals = defaultdict(int)
+total = 0
+with open(lines_path, encoding="utf-8", errors="replace") as f:
+    for line in f:
+        line = line.rstrip("\n")
+        if not line.strip():
+            continue
+        parts = line.strip().split(None, 1)
+        if len(parts) != 2:
+            continue
+        try:
+            n = int(parts[0])
+        except ValueError:
+            continue
+        path = parts[1]
+        fname = path.rsplit("/", 1)[-1]
+        if "." in fname and not fname.startswith("."):
+            ext = fname.rsplit(".", 1)[-1]
+        elif fname.startswith(".") and fname.count(".") == 1:
+            ext = fname[1:]
+        else:
+            ext = "(no ext)"
+        ext_totals[ext] += n
+        total += n
 
-echo "DEBUG raw_prs.json head:" >&2; head -c 500 "$WORKDIR/raw_prs.json" >&2; echo "" >&2
+top_ext = sorted(ext_totals.items(), key=lambda kv: -kv[1])[:10]
+loc_lines = [f"**{total:,} total**", "", "| Language | Lines | Share |", "|---|---|---|"]
+for ext, n in top_ext:
+    pct = (n * 100 / total) if total else 0
+    loc_lines.append(f"| {ext} | {n} | {pct:.1f}% |")
+loc_block = "\n".join(loc_lines)
 
-jq --arg owner "$OWNER" -c '
-  .[] | select((.repository_url | split("/")[-2]) != $owner) |
-  {
-    repo: (.repository_url | split("/")[-2] + "/" + (.repository_url | split("/")[-1])),
-    url: .html_url,
-    merged: (.pull_request.merged_at != null),
-    title: .title
-  }
-' "$WORKDIR/raw_prs.json" > "$WORKDIR/ext_prs.jsonl"
+# --- External contributions ---
+with open(search_path, encoding="utf-8") as f:
+    search_data = json.load(f)
+items = search_data.get("items", []) if isinstance(search_data, dict) else []
 
-MERGED_COUNT=$(jq -s '[.[] | select(.merged==true)] | length' "$WORKDIR/ext_prs.jsonl")
-OPEN_COUNT=$(jq -s '[.[] | select(.merged==false)] | length' "$WORKDIR/ext_prs.jsonl")
+merged, open_repos = [], defaultdict(int)
+for it in items:
+    if not isinstance(it, dict):
+        continue
+    repo_url = it.get("repository_url", "")
+    parts = repo_url.rstrip("/").split("/")
+    if len(parts) < 2:
+        continue
+    repo_owner, repo_name = parts[-2], parts[-1]
+    if repo_owner == owner:
+        continue
+    full_repo = f"{repo_owner}/{repo_name}"
+    pr = it.get("pull_request") or {}
+    is_merged = pr.get("merged_at") is not None
+    if is_merged:
+        merged.append((full_repo, it.get("html_url", ""), it.get("title", "")))
+    else:
+        open_repos[full_repo] += 1
 
-{
-  if [ "$MERGED_COUNT" -gt 0 ]; then
-    printf '**Merged (%s):** ' "$MERGED_COUNT"
-    jq -r 'select(.merged==true) | "[" + .repo + "](" + .url + ") — " + .title' "$WORKDIR/ext_prs.jsonl" | paste -sd, - | sed 's/,/, /g'
-  else
-    printf '**Merged (0):** none yet.'
-  fi
-  printf '\n\n'
-  if [ "$OPEN_COUNT" -gt 0 ]; then
-    printf '**Open / pending review (%s):** ' "$OPEN_COUNT"
-    jq -rs '
-      map(select(.merged==false)) | group_by(.repo) |
-      map("[" + .[0].repo + "](https://github.com/" + .[0].repo + "/pulls" +
-          (if length > 1 then ") (x" + (length|tostring) + ")" else ")" end)) |
-      join(", ")
-    ' "$WORKDIR/ext_prs.jsonl"
-  else
-    printf '**Open / pending review (0):** none.'
-  fi
-} > "$WORKDIR/contrib_block.md"
+contrib_lines = []
+if merged:
+    entries = ", ".join(f"[{repo}]({url}) — {title}" for repo, url, title in merged)
+    contrib_lines.append(f"**Merged ({len(merged)}):** {entries}")
+else:
+    contrib_lines.append("**Merged (0):** none yet.")
+contrib_lines.append("")
+if open_repos:
+    entries = ", ".join(
+        f"[{repo}](https://github.com/{repo}/pulls)" + (f" (x{count})" if count > 1 else "")
+        for repo, count in sorted(open_repos.items())
+    )
+    contrib_lines.append(f"**Open / pending review ({sum(open_repos.values())}):** {entries}")
+else:
+    contrib_lines.append("**Open / pending review (0):** none.")
+contrib_block = "\n".join(contrib_lines)
 
-# ---- splice both blocks into README.md between markers ----
-python3 - "$WORKDIR/loc_block.md" "$WORKDIR/contrib_block.md" <<'PY'
-import sys, re
-loc_path, contrib_path = sys.argv[1], sys.argv[2]
-with open("README.md", encoding="utf-8") as f:
+# --- splice into README.md ---
+with open(readme_path, encoding="utf-8") as f:
     readme = f.read()
-loc_block = open(loc_path, encoding="utf-8").read().strip()
-contrib_block = open(contrib_path, encoding="utf-8").read().strip()
 readme = re.sub(r"(<!-- LOC-START -->\n).*?(\n<!-- LOC-END -->)", lambda m: m.group(1) + loc_block + m.group(2), readme, flags=re.S)
 readme = re.sub(r"(<!-- CONTRIB-START -->\n).*?(\n<!-- CONTRIB-END -->)", lambda m: m.group(1) + contrib_block + m.group(2), readme, flags=re.S)
-with open("README.md", "w", encoding="utf-8") as f:
+with open(readme_path, "w", encoding="utf-8") as f:
     f.write(readme)
-PY
 
-echo "Stats refreshed."
+print("Stats refreshed.")
+PY
