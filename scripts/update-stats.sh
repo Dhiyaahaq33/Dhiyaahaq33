@@ -48,7 +48,8 @@ END { for (e in sum) print sum[e], e }' "$WORKDIR/all_lines.txt" | sort -rn | he
 # ---- external contributions (PRs on repos NOT owned by the user, forks excluded by definition) ----
 # NOTE: gh api's --jq does not accept extra jq flags like --arg on the same call.
 # Fetch raw items first, then filter with a separate jq invocation.
-gh api "search/issues?q=author:${OWNER}+type:pr&per_page=100" --jq '.items' > "$WORKDIR/raw_prs.json" || echo "[]" > "$WORKDIR/raw_prs.json"
+gh api "search/issues?q=author:${OWNER}+type:pr&per_page=100" --jq ".items" > "$WORKDIR/raw_prs.json" 2>/dev/null || echo "[]" > "$WORKDIR/raw_prs.json"
+jq -e 'type == "array"' "$WORKDIR/raw_prs.json" >/dev/null 2>&1 || echo '[]' > "$WORKDIR/raw_prs.json"
 
 jq --arg owner "$OWNER" -c '
   .[] | select((.repository_url | split("/")[-2]) != $owner) |
