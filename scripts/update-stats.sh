@@ -11,7 +11,7 @@ mapfile -t OWN_REPOS < <(gh repo list "$OWNER" --limit 300 --json name,isFork \
   --jq '.[] | select(.isFork==false and .name!="'"$OWNER"'" and .name!="daily-activity") | .name')
 
 for name in "${OWN_REPOS[@]}"; do
-  git clone --depth 1 -q "https://github.com/$OWNER/$name.git" "$WORKDIR/$name" 2>/dev/null || true
+  git clone --depth 1 -q "https://x-access-token:${GH_TOKEN}@github.com/$OWNER/$name.git" "$WORKDIR/$name" 2>/dev/null || echo "warn: failed to clone $name" >&2
 done
 
 find "$WORKDIR" -type f \
@@ -41,7 +41,7 @@ END { for (e in sum) print sum[e], e }' "$WORKDIR/all_lines.txt" | sort -rn | he
   echo "|---|---|---|"
   while read -r lines ext; do
     pct=$(awk -v l="$lines" -v t="$TOTAL" 'BEGIN { printf "%.1f", (t>0 ? l*100/t : 0) }')
-    printf '| %s | %s | %s%%%% |\n' "$ext" "$lines" "$pct"
+    printf '| %s | %s | %s%% |\n' "$ext" "$lines" "$pct"
   done < "$WORKDIR/top_ext.txt"
 } > "$WORKDIR/loc_block.md"
 
