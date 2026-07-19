@@ -37,20 +37,20 @@ Deploying real systems, not just notebooks.
 Counted across all own repositories (own work only, forks excluded). Auto-refreshed daily.
 
 <!-- LOC-START -->
-**116,355 total**
+**84169 total**
 
 | Language | Lines | Share |
 |---|---|---|
-| Python | 79,983 | 68.8% |
-| JSON | 10,210 | 8.8% |
-| HTML | 9,353 | 8.0% |
-| Markdown | 7,381 | 6.3% |
-| JavaScript | 1,865 | 1.6% |
-| JSX | 1,215 | 1.0% |
-| SQL | 715 | 0.6% |
-| MQH (MQL includes) | 713 | 0.6% |
-| MQ5 (MetaTrader) | 676 | 0.6% |
-| Pine Script | 543 | 0.5% |
+| py | 52177 | 62.0%% |
+| json | 10174 | 12.1%% |
+| html | 6877 | 8.2%% |
+| md | 6205 | 7.4%% |
+| js | 1865 | 2.2%% |
+| jsx | 1215 | 1.4%% |
+| mqh | 713 | 0.8%% |
+| mq5 | 676 | 0.8%% |
+| gitignore | 599 | 0.7%% |
+| sql | 577 | 0.7%% |
 <!-- LOC-END -->
 
 ---
@@ -60,9 +60,7 @@ Counted across all own repositories (own work only, forks excluded). Auto-refres
 Pull requests opened on other people's public repos (not forks — real upstream projects). Auto-refreshed daily.
 
 <!-- CONTRIB-START -->
-**✅ Merged (1):** [squidKid-deluxe/QTradeX-Algo-Trading-SDK](https://github.com/squidKid-deluxe/QTradeX-Algo-Trading-SDK/pull/8) — added Awesome Oscillator indicator
-
-**⏳ Open / pending review (13):** [freqtrade/freqtrade](https://github.com/freqtrade/freqtrade/pull/13359), [AI4Finance-Foundation/FinRobot](https://github.com/AI4Finance-Foundation/FinRobot/pull/111), [AI4Finance-Foundation/FinRL-Meta](https://github.com/AI4Finance-Foundation/FinRL-Meta/pull/363), [pkjmesra/PKScreener](https://github.com/pkjmesra/PKScreener/pulls) (x2), [51bitquant/binance_grid_trader](https://github.com/51bitquant/binance_grid_trader/pull/39), [al1enjesus/polymarket-whales](https://github.com/al1enjesus/polymarket-whales/pull/12), [cunarist/solie](https://github.com/cunarist/solie/pulls) (x2), [squidKid-deluxe/QTradeX-Algo-Trading-SDK](https://github.com/squidKid-deluxe/QTradeX-Algo-Trading-SDK/pull/9), [diogomatoschaves/MyCryptoBot](https://github.com/diogomatoschaves/MyCryptoBot/pull/193), [himanshu2406/Algo.Py](https://github.com/himanshu2406/Algo.Py/pull/26), [HammerGPT/Hyper-Alpha-Arena](https://github.com/HammerGPT/Hyper-Alpha-Arena/pull/69), [whchien/ai-trader](https://github.com/whchien/ai-trader/pull/17)
+**✅ Merged (0):** none yet.
 <!-- CONTRIB-END -->
 
 ---
