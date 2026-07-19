@@ -37,7 +37,7 @@ Deploying real systems, not just notebooks.
 Counted across all own repositories (own work only, forks excluded). Auto-refreshed daily.
 
 <!-- LOC-START -->
-**116412 total**
+**116,412 total**
 
 | Language | Lines | Share |
 |---|---|---|
@@ -47,10 +47,10 @@ Counted across all own repositories (own work only, forks excluded). Auto-refres
 | md | 7381 | 6.3% |
 | js | 1865 | 1.6% |
 | jsx | 1215 | 1.0% |
+| (no ext) | 887 | 0.8% |
 | sql | 715 | 0.6% |
 | mqh | 713 | 0.6% |
 | gitignore | 679 | 0.6% |
-| mq5 | 676 | 0.6% |
 <!-- LOC-END -->
 
 ---
@@ -60,7 +60,9 @@ Counted across all own repositories (own work only, forks excluded). Auto-refres
 Pull requests opened on other people's public repos (not forks — real upstream projects). Auto-refreshed daily.
 
 <!-- CONTRIB-START -->
-**✅ Merged (0):** none yet.
+**Merged (1):** [squidKid-deluxe/QTradeX-Algo-Trading-SDK](https://github.com/squidKid-deluxe/QTradeX-Algo-Trading-SDK/pull/8) — feat: add Awesome Oscillator indicator
+
+**Open / pending review (14):** [51bitquant/binance_grid_trader](https://github.com/51bitquant/binance_grid_trader/pulls), [AI4Finance-Foundation/FinRL-Meta](https://github.com/AI4Finance-Foundation/FinRL-Meta/pulls), [AI4Finance-Foundation/FinRobot](https://github.com/AI4Finance-Foundation/FinRobot/pulls), [HammerGPT/Hyper-Alpha-Arena](https://github.com/HammerGPT/Hyper-Alpha-Arena/pulls), [al1enjesus/polymarket-whales](https://github.com/al1enjesus/polymarket-whales/pulls), [cunarist/solie](https://github.com/cunarist/solie/pulls) (x2), [diogomatoschaves/MyCryptoBot](https://github.com/diogomatoschaves/MyCryptoBot/pulls), [freqtrade/freqtrade](https://github.com/freqtrade/freqtrade/pulls), [himanshu2406/Algo.Py](https://github.com/himanshu2406/Algo.Py/pulls), [pkjmesra/PKScreener](https://github.com/pkjmesra/PKScreener/pulls) (x2), [squidKid-deluxe/QTradeX-Algo-Trading-SDK](https://github.com/squidKid-deluxe/QTradeX-Algo-Trading-SDK/pulls), [whchien/ai-trader](https://github.com/whchien/ai-trader/pulls)
 <!-- CONTRIB-END -->
 
 ---
