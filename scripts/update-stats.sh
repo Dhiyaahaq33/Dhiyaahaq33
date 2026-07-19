@@ -51,6 +51,8 @@ END { for (e in sum) print sum[e], e }' "$WORKDIR/all_lines.txt" | sort -rn | he
 gh api "search/issues?q=author:${OWNER}+type:pr&per_page=100" --jq ".items" > "$WORKDIR/raw_prs.json" 2>/dev/null || echo "[]" > "$WORKDIR/raw_prs.json"
 jq -e 'type == "array"' "$WORKDIR/raw_prs.json" >/dev/null 2>&1 || echo '[]' > "$WORKDIR/raw_prs.json"
 
+echo "DEBUG raw_prs.json head:" >&2; head -c 500 "$WORKDIR/raw_prs.json" >&2; echo "" >&2
+
 jq --arg owner "$OWNER" -c '
   .[] | select((.repository_url | split("/")[-2]) != $owner) |
   {
