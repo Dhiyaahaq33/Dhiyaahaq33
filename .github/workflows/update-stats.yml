@@ -7,6 +7,10 @@ on:
   repository_dispatch:
     types: [stats-refresh]
 
+concurrency:
+  group: update-stats
+  cancel-in-progress: false
+
 permissions:
   contents: write
 
@@ -21,10 +25,22 @@ jobs:
       - name: Refresh Lines of Code + Contributions
         run: bash scripts/update-stats.sh
 
-      - name: Commit and push if changed
+      - name: Commit and push if changed (with retry on race)
         run: |
           git config user.name "Dhiyaahaq33"
           git config user.email "139051782+Dhiyaahaq33@users.noreply.github.com"
           git add README.md
-          git diff --cached --quiet || git commit -m "chore: auto-refresh LOC and contributions"
-          git push
+          if git diff --cached --quiet; then
+            echo "Nothing changed."
+            exit 0
+          fi
+          git commit -m "chore: auto-refresh LOC and contributions"
+          for i in 1 2 3 4 5; do
+            if git push; then
+              exit 0
+            fi
+            echo "Push rejected, retrying ($i/5)..."
+            git pull --rebase origin "$(git branch --show-current)"
+          done
+          echo "Push failed after retries."
+          exit 1
