@@ -61,7 +61,9 @@ with open(lines_path, encoding="utf-8", errors="replace") as f:
         total += n
 
 top_ext = sorted(ext_totals.items(), key=lambda kv: -kv[1])[:10]
-loc_lines = [f"**{total:,} total**", "", "| Language | Lines | Share |", "|---|---|---|"]
+badge_total = f"{total:,}".replace(",", "%2C")
+badge_url = f"https://img.shields.io/badge/Total_Lines_of_Code-{badge_total}-brightgreen?style=for-the-badge&logo=codereview&logoColor=white"
+loc_lines = [f"[![Total Lines of Code]({badge_url})]()", "", "| Language | Lines | Share |", "|---|---|---|"]
 for ext, n in top_ext:
     pct = (n * 100 / total) if total else 0
     loc_lines.append(f"| {ext} | {n} | {pct:.1f}% |")
