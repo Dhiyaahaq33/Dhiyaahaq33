@@ -2,8 +2,10 @@ name: Update profile stats
 
 on:
   schedule:
-    - cron: '30 4 * * *'   # ~11:30 WIB daily
+    - cron: '30 4 * * *'   # ~11:30 WIB daily (fallback safety net)
   workflow_dispatch:
+  repository_dispatch:
+    types: [stats-refresh]
 
 permissions:
   contents: write
