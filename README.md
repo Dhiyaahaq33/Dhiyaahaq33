@@ -39,7 +39,7 @@ Counted across all repositories, own work + forks combined. Auto-refreshed on ev
 <img align="right" width="380" src="loc-chart.png" alt="Lines of Code breakdown, 3D pie chart">
 
 <!-- LOC-START -->
-<img width="380" src="loc-total.png" alt="Total Lines of Code">
+**21,152,287 total**
 
 | Language | Lines | Share |
 |---|---|---|
