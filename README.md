@@ -36,7 +36,7 @@ Deploying real systems, not just notebooks.
 
 Counted across all repositories, own work + forks combined. Auto-refreshed on every push (near real-time) with a daily fallback.
 
-<img align="right" width="340" src="loc-chart.png" alt="Lines of Code breakdown, 3D pie chart">
+<img align="right" width="460" src="loc-chart.png" alt="Lines of Code breakdown, 3D pie chart">
 
 <!-- LOC-START -->
 **21,152,287 total**
