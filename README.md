@@ -37,18 +37,18 @@ Deploying real systems, not just notebooks.
 Counted across all own repositories (own work only, forks excluded). Auto-refreshed daily.
 
 <!-- LOC-START -->
-**119,180 total**
+**119,562 total**
 
 | Language | Lines | Share |
 |---|---|---|
-| py | 80397 | 67.5% |
-| json | 10210 | 8.6% |
-| md | 9405 | 7.9% |
+| py | 80397 | 67.2% |
+| json | 10210 | 8.5% |
+| md | 9406 | 7.9% |
 | html | 9353 | 7.8% |
 | js | 1865 | 1.6% |
 | jsx | 1215 | 1.0% |
 | (no ext) | 887 | 0.7% |
-| txt | 827 | 0.7% |
+| txt | 830 | 0.7% |
 | gitignore | 793 | 0.7% |
 | sql | 715 | 0.6% |
 <!-- LOC-END -->
