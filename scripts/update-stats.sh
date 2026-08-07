@@ -61,7 +61,7 @@ with open(lines_path, encoding="utf-8", errors="replace") as f:
         total += n
 
 top_ext = sorted(ext_totals.items(), key=lambda kv: -kv[1])[:10]
-loc_lines = ['<img width="380" src="loc-total.png" alt="Total Lines of Code">', "", "| Language | Lines | Share |", "|---|---|---|"]
+loc_lines = [f"**{total:,} total**", "", "| Language | Lines | Share |", "|---|---|---|"]
 for ext, n in top_ext:
     pct = (n * 100 / total) if total else 0
     loc_lines.append(f"| {ext} | {n} | {pct:.1f}% |")
@@ -129,24 +129,6 @@ def draw_3d_pie(labels, sizes, colors, out_path, depth=0.09, squash=0.62):
     fig.patch.set_alpha(0.0)
     plt.savefig(out_path, dpi=150, bbox_inches="tight", transparent=True)
     plt.close(fig)
-
-def draw_total_banner(total_value, out_path):
-    fig, ax = plt.subplots(figsize=(9.6, 2.0))
-    ax.set_xlim(0, 1)
-    ax.set_ylim(0, 1)
-    ax.axis("off")
-    fig.patch.set_facecolor("#0d1117")
-    ax.add_patch(plt.Rectangle((0, 0), 1, 1, transform=ax.transAxes,
-                                facecolor="#0d1117", edgecolor="#2ea043", linewidth=3))
-    ax.text(0.5, 0.68, f"{total_value:,}", ha="center", va="center",
-            fontsize=64, fontweight="bold", color="#3fb950", transform=ax.transAxes)
-    ax.text(0.5, 0.20, "TOTAL LINES OF CODE", ha="center", va="center",
-            fontsize=20, color="#e6edf3", transform=ax.transAxes,
-            fontweight="bold", family="monospace")
-    plt.savefig(out_path, dpi=150, bbox_inches="tight", facecolor="#0d1117")
-    plt.close(fig)
-
-draw_total_banner(total, "loc-total.png")
 
 chart_labels = [ext for ext, _ in top_ext]
 chart_sizes = [n for _, n in top_ext]
