@@ -39,20 +39,20 @@ Counted across all repositories, own work + forks combined. Auto-refreshed on ev
 <img align="right" width="460" src="loc-chart.png" alt="Lines of Code breakdown, 3D pie chart">
 
 <!-- LOC-START -->
-**21,152,287 total**
+[![Total Lines of Code](https://img.shields.io/badge/Total_Lines_of_Code-21%2C113%2C851-brightgreen?style=for-the-badge&logo=codereview&logoColor=white)]()
 
 | Language | Lines | Share |
 |---|---|---|
-| py | 3669645 | 17.3% |
-| csv | 3476431 | 16.4% |
+| py | 3669645 | 17.4% |
+| csv | 3476431 | 16.5% |
 | json | 2341694 | 11.1% |
 | ts | 2042853 | 9.7% |
 | tsx | 1969032 | 9.3% |
 | md | 916648 | 4.3% |
 | ipynb | 719536 | 3.4% |
 | model | 562504 | 2.7% |
-| txt | 482532 | 2.3% |
 | toml | 471427 | 2.2% |
+| txt | 444096 | 2.1% |
 <!-- LOC-END -->
 
 ---
