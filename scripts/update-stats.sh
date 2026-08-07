@@ -61,7 +61,7 @@ with open(lines_path, encoding="utf-8", errors="replace") as f:
         total += n
 
 top_ext = sorted(ext_totals.items(), key=lambda kv: -kv[1])[:10]
-loc_lines = ["![Total Lines of Code](loc-total.png)", "", "| Language | Lines | Share |", "|---|---|---|"]
+loc_lines = ['<img width="380" src="loc-total.png" alt="Total Lines of Code">', "", "| Language | Lines | Share |", "|---|---|---|"]
 for ext, n in top_ext:
     pct = (n * 100 / total) if total else 0
     loc_lines.append(f"| {ext} | {n} | {pct:.1f}% |")
