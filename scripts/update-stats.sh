@@ -52,8 +52,10 @@ while idx < n:
             total += size
 
 top_lang = sorted(lang_totals.items(), key=lambda kv: -kv[1])[:10]
+total_badge = f"{total:,}".replace(",", "%2C")
+badge_url = f"https://img.shields.io/badge/Total_Code_Size-{total_badge}_bytes-red?style=flat-square"
 loc_lines = [
-    f'<font color="red">**{total:,} total bytes**</font>',
+    f"![Total Code Size]({badge_url})",
     "",
     "| Language | Bytes | Share |",
     "|---|---|---|",
