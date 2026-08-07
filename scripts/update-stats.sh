@@ -79,7 +79,7 @@ PALETTE = ["#4C72B0", "#DD8452", "#55A868", "#C44E52", "#8172B2",
            "#937860", "#DA8BC3", "#8C8C8C", "#CCB974", "#64B5CD"]
 
 def draw_3d_pie(labels, sizes, colors, out_path, depth=0.09, squash=0.62):
-    fig, ax = plt.subplots(figsize=(6.4, 6.4))
+    fig, ax = plt.subplots(figsize=(9.0, 6.4))
     ax.set_xlim(-1.25, 1.25)
     ax.set_ylim(-1.25 - depth, 1.25)
     ax.set_aspect("equal")
@@ -123,8 +123,8 @@ def draw_3d_pie(labels, sizes, colors, out_path, depth=0.09, squash=0.62):
             ax.text(lx, ly, f"{pct:.1f}%", ha="center", va="center", fontsize=9, color="#e6e6e6")
 
     legend_handles = [plt.Rectangle((0, 0), 1, 1, color=c) for c in colors]
-    ax.legend(legend_handles, labels, loc="upper center", bbox_to_anchor=(0.5, -0.02),
-               ncol=2, frameon=False, fontsize=9, labelcolor="#e6e6e6")
+    ax.legend(legend_handles, labels, loc="center left", bbox_to_anchor=(1.02, 0.5),
+               ncol=1, frameon=False, fontsize=11, labelcolor="#e6e6e6", handlelength=1.2, handleheight=1.2)
 
     fig.patch.set_alpha(0.0)
     plt.savefig(out_path, dpi=150, bbox_inches="tight", transparent=True)
