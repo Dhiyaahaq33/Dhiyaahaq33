@@ -39,10 +39,20 @@ Code size across all repositories, own work + forks combined, via GitHub's Langu
 <img align="right" width="480" src="loc-chart.png" alt="Lines of Code breakdown, 3D pie chart">
 
 <!-- LOC-START -->
-<font color="red">**0 total bytes**</font>
+<font color="red">**409,885,468 total bytes**</font>
 
 | Language | Bytes | Share |
 |---|---|---|
+| Python | 139,304,260 | 34.0% |
+| TypeScript | 128,430,024 | 31.3% |
+| Jupyter Notebook | 65,172,203 | 15.9% |
+| Java | 13,817,824 | 3.4% |
+| JavaScript | 13,438,014 | 3.3% |
+| MDX | 11,824,728 | 2.9% |
+| Go | 9,067,295 | 2.2% |
+| PHP | 7,494,709 | 1.8% |
+| HTML | 4,354,723 | 1.1% |
+| Svelte | 3,758,414 | 0.9% |
 <!-- LOC-END -->
 
 ---
