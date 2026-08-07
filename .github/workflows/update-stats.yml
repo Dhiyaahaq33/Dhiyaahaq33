@@ -22,6 +22,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install chart dependencies
+        run: pip install --quiet matplotlib numpy
+
       - name: Refresh Lines of Code + Contributions
         run: bash scripts/update-stats.sh
 
@@ -29,7 +36,7 @@ jobs:
         run: |
           git config user.name "Dhiyaahaq33"
           git config user.email "139051782+Dhiyaahaq33@users.noreply.github.com"
-          git add README.md
+          git add README.md loc-chart.png
           if git diff --cached --quiet; then
             echo "Nothing changed."
             exit 0
