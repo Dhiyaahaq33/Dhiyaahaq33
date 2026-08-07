@@ -39,7 +39,7 @@ Bytes of code across all repositories, own work + forks combined, via GitHub's L
 <img align="right" width="480" src="loc-chart.png" alt="Lines of Code breakdown, 3D pie chart">
 
 <!-- LOC-START -->
-<font color="red">**409,885,468 total bytes**</font>
+![Total Code Size](https://img.shields.io/badge/Total_Code_Size-409%2C885%2C468_bytes-red?style=flat-square)
 
 | Language | Bytes | Share |
 |---|---|---|
