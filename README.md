@@ -37,20 +37,20 @@ Deploying real systems, not just notebooks.
 Counted across all repositories, own work + forks combined. Auto-refreshed on every push (near real-time) with a daily fallback.
 
 <!-- LOC-START -->
-**119,562 total**
+**21,113,851 total**
 
 | Language | Lines | Share |
 |---|---|---|
-| py | 80397 | 67.2% |
-| json | 10210 | 8.5% |
-| md | 9406 | 7.9% |
-| html | 9353 | 7.8% |
-| js | 1865 | 1.6% |
-| jsx | 1215 | 1.0% |
-| (no ext) | 887 | 0.7% |
-| txt | 830 | 0.7% |
-| gitignore | 793 | 0.7% |
-| sql | 715 | 0.6% |
+| py | 3669645 | 17.4% |
+| csv | 3476431 | 16.5% |
+| json | 2341694 | 11.1% |
+| ts | 2042853 | 9.7% |
+| tsx | 1969032 | 9.3% |
+| md | 916648 | 4.3% |
+| ipynb | 719536 | 3.4% |
+| model | 562504 | 2.7% |
+| toml | 471427 | 2.2% |
+| txt | 444096 | 2.1% |
 <!-- LOC-END -->
 
 ---
