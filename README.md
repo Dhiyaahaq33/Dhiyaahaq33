@@ -34,7 +34,7 @@ Deploying real systems, not just notebooks.
 
 ### Lines of Code
 
-Counted across all own repositories (own work only, forks excluded). Auto-refreshed daily.
+Counted across all repositories, own work + forks combined. Auto-refreshed on every push (near real-time) with a daily fallback.
 
 <!-- LOC-START -->
 **119,562 total**
