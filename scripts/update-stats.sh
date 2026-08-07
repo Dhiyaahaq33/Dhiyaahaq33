@@ -6,9 +6,9 @@ OWNER="Dhiyaahaq33"
 WORKDIR=$(mktemp -d)
 trap 'rm -rf "$WORKDIR"' EXIT
 
-# ---- own repos (exclude forks, the profile repo, and the padding automation repo) ----
+# ---- all repos: own work + forks combined (exclude the profile repo and the padding automation repo) ----
 mapfile -t OWN_REPOS < <(gh repo list "$OWNER" --limit 300 --json name,isFork \
-  --jq '.[] | select(.isFork==false and .name!="'"$OWNER"'" and .name!="daily-activity") | .name')
+  --jq '.[] | select(.name!="'"$OWNER"'" and .name!="daily-activity") | .name')
 
 for name in "${OWN_REPOS[@]}"; do
   git clone --depth 1 -q "https://x-access-token:${GH_TOKEN}@github.com/$OWNER/$name.git" "$WORKDIR/$name" 2>/dev/null || echo "warn: failed to clone $name" >&2
