@@ -32,14 +32,21 @@ owner = os.environ["OWNER"]
 lang_totals = defaultdict(int)
 total = 0
 with open(lang_path, encoding="utf-8", errors="replace") as f:
-    for line in f:
-        line = line.strip()
-        if not line:
-            continue
-        try:
-            obj = json.loads(line)
-        except json.JSONDecodeError:
-            continue
+    text = f.read()
+decoder = json.JSONDecoder()
+idx = 0
+n = len(text)
+while idx < n:
+    while idx < n and text[idx] in " \t\r\n":
+        idx += 1
+    if idx >= n:
+        break
+    try:
+        obj, end = decoder.raw_decode(text, idx)
+    except json.JSONDecodeError:
+        break
+    idx = end
+    if isinstance(obj, dict):
         for lang, size in obj.items():
             lang_totals[lang] += size
             total += size
