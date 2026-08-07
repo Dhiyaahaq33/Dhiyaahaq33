@@ -32,9 +32,9 @@ Deploying real systems, not just notebooks.
 
 ---
 
-### Lines of Code
+### Code Size
 
-Code size across all repositories, own work + forks combined, via GitHub's Languages API (instant, no repo cloning). Auto-refreshed on every push (near real-time) with a daily fallback.
+Bytes of code across all repositories, own work + forks combined, via GitHub's Languages API (instant, no repo cloning — this measures file size, not line count). Auto-refreshed on every push (near real-time) with a daily fallback.
 
 <img align="right" width="480" src="loc-chart.png" alt="Lines of Code breakdown, 3D pie chart">
 
