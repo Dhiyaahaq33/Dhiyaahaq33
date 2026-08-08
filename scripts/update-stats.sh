@@ -10,54 +10,64 @@ trap 'rm -rf "$WORKDIR"' EXIT
 mapfile -t OWN_REPOS < <(gh repo list "$OWNER" --limit 300 --json name,isFork \
   --jq '.[] | select(.name!="'"$OWNER"'" and .name!="daily-activity") | .name')
 
-# ---- code size per repo via the Languages API (bytes, not lines) -- no cloning, near-instant ----
-> "$WORKDIR/languages.jsonl"
+# ---- literal line counts: clone every repo (shallow) and wc -l everything ----
 for name in "${OWN_REPOS[@]}"; do
-  gh api "repos/$OWNER/$name/languages" 2>/dev/null >> "$WORKDIR/languages.jsonl" || echo '{}' >> "$WORKDIR/languages.jsonl"
+  git clone --depth 1 -q "https://x-access-token:${GH_TOKEN}@github.com/$OWNER/$name.git" "$WORKDIR/$name" 2>/dev/null || echo "warn: failed to clone $name" >&2
 done
+
+find "$WORKDIR" -type f \
+  -not -path "*/.git/*" \
+  -not -iname "*.png" -not -iname "*.jpg" -not -iname "*.jpeg" -not -iname "*.gif" -not -iname "*.ico" \
+  -not -iname "*.db" -not -iname "*.sqlite*" -not -iname "*.pdf" -not -iname "*.docx" \
+  -not -iname "*.ttf" -not -iname "*.woff*" -not -iname "*.mp4" -not -iname "*.zip" \
+  -not -iname "*.exe" -not -iname "*.dll" -not -iname "*.pyc" \
+  -print0 | xargs -0 wc -l 2>/dev/null | grep -v " total$" > "$WORKDIR/all_lines.txt" || true
 
 # ---- fetch external PRs as raw JSON (no jq filtering here — do it in Python below) ----
 gh api "search/issues?q=author:${OWNER}+type:pr&per_page=100" > "$WORKDIR/search_result.json" 2>/dev/null || echo '{"items":[]}' > "$WORKDIR/search_result.json"
 
-# ---- everything else: compute size breakdown, filter PRs, splice into README.md ----
-OWNER="$OWNER" python3 - "$WORKDIR/languages.jsonl" "$WORKDIR/search_result.json" README.md <<'PY'
+# ---- everything else: compute LOC breakdown, filter PRs, splice into README.md ----
+OWNER="$OWNER" python3 - "$WORKDIR/all_lines.txt" "$WORKDIR/search_result.json" README.md <<'PY'
 import sys, os, re, json
 import numpy as np
 from collections import defaultdict
 
-lang_path, search_path, readme_path = sys.argv[1], sys.argv[2], sys.argv[3]
+lines_path, search_path, readme_path = sys.argv[1], sys.argv[2], sys.argv[3]
 owner = os.environ["OWNER"]
 
-# --- Code size per language (bytes, via GitHub's Languages API) ---
-lang_totals = defaultdict(int)
+# --- Lines of Code (literal wc -l per file, grouped by extension) ---
+ext_totals = defaultdict(int)
 total = 0
-with open(lang_path, encoding="utf-8", errors="replace") as f:
-    text = f.read()
-decoder = json.JSONDecoder()
-idx = 0
-n = len(text)
-while idx < n:
-    while idx < n and text[idx] in " \t\r\n":
-        idx += 1
-    if idx >= n:
-        break
-    try:
-        obj, end = decoder.raw_decode(text, idx)
-    except json.JSONDecodeError:
-        break
-    idx = end
-    if isinstance(obj, dict):
-        for lang, size in obj.items():
-            lang_totals[lang] += size
-            total += size
+with open(lines_path, encoding="utf-8", errors="replace") as f:
+    for line in f:
+        line = line.rstrip("\n")
+        if not line.strip():
+            continue
+        parts = line.strip().split(None, 1)
+        if len(parts) != 2:
+            continue
+        try:
+            n = int(parts[0])
+        except ValueError:
+            continue
+        path = parts[1]
+        fname = path.rsplit("/", 1)[-1]
+        if "." in fname and not fname.startswith("."):
+            ext = fname.rsplit(".", 1)[-1]
+        elif fname.startswith(".") and fname.count(".") == 1:
+            ext = fname[1:]
+        else:
+            ext = "(no ext)"
+        ext_totals[ext] += n
+        total += n
 
-top_lang = sorted(lang_totals.items(), key=lambda kv: -kv[1])[:10]
+top_lang = sorted(ext_totals.items(), key=lambda kv: -kv[1])[:10]
 total_badge = f"{total:,}".replace(",", "%2C")
-badge_url = f"https://img.shields.io/badge/Total_Code_Size-{total_badge}_bytes-red?style=flat-square"
+badge_url = f"https://img.shields.io/badge/Total_Lines_of_Code-{total_badge}-red?style=flat-square"
 loc_lines = [
-    f"![Total Code Size]({badge_url})",
+    f"![Total Lines of Code]({badge_url})",
     "",
-    "| Language | Bytes | Share |",
+    "| Language | Lines | Share |",
     "|---|---|---|",
 ]
 for lang, n in top_lang:
