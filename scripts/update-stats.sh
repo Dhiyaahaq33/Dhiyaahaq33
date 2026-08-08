@@ -3,61 +3,99 @@ set -euo pipefail
 cd "$(dirname "$0")/.."
 
 OWNER="Dhiyaahaq33"
-WORKDIR=$(mktemp -d)
-trap 'rm -rf "$WORKDIR"' EXIT
-
-# ---- all repos: own work + forks combined (exclude the profile repo and the padding automation repo) ----
-mapfile -t OWN_REPOS < <(gh repo list "$OWNER" --limit 300 --json name,isFork \
-  --jq '.[] | select(.name!="'"$OWNER"'" and .name!="daily-activity") | .name')
-
-# ---- literal line counts: clone every repo (shallow) and wc -l everything ----
-for name in "${OWN_REPOS[@]}"; do
-  git clone --depth 1 -q "https://x-access-token:${GH_TOKEN}@github.com/$OWNER/$name.git" "$WORKDIR/$name" 2>/dev/null || echo "warn: failed to clone $name" >&2
-done
-
-find "$WORKDIR" -type f \
-  -not -path "*/.git/*" \
-  -not -iname "*.png" -not -iname "*.jpg" -not -iname "*.jpeg" -not -iname "*.gif" -not -iname "*.ico" \
-  -not -iname "*.db" -not -iname "*.sqlite*" -not -iname "*.pdf" -not -iname "*.docx" \
-  -not -iname "*.ttf" -not -iname "*.woff*" -not -iname "*.mp4" -not -iname "*.zip" \
-  -not -iname "*.exe" -not -iname "*.dll" -not -iname "*.pyc" \
-  -print0 | xargs -0 wc -l 2>/dev/null | grep -v " total$" > "$WORKDIR/all_lines.txt" || true
 
 # ---- fetch external PRs as raw JSON (no jq filtering here — do it in Python below) ----
+WORKDIR=$(mktemp -d)
+trap 'rm -rf "$WORKDIR"' EXIT
 gh api "search/issues?q=author:${OWNER}+type:pr&per_page=100" > "$WORKDIR/search_result.json" 2>/dev/null || echo '{"items":[]}' > "$WORKDIR/search_result.json"
 
-# ---- everything else: compute LOC breakdown, filter PRs, splice into README.md ----
-OWNER="$OWNER" python3 - "$WORKDIR/all_lines.txt" "$WORKDIR/search_result.json" README.md <<'PY'
-import sys, os, re, json
-import numpy as np
+# ---- everything else: incremental LOC via per-repo cache, filter PRs, splice into README.md ----
+OWNER="$OWNER" GH_TOKEN="$GH_TOKEN" python3 - "$WORKDIR/search_result.json" README.md stats-cache.json <<'PY'
+import sys, os, re, json, subprocess, tempfile, shutil
 from collections import defaultdict
 
-lines_path, search_path, readme_path = sys.argv[1], sys.argv[2], sys.argv[3]
+search_path, readme_path, cache_path = sys.argv[1], sys.argv[2], sys.argv[3]
 owner = os.environ["OWNER"]
+token = os.environ["GH_TOKEN"]
 
-# --- Lines of Code (literal wc -l per file, grouped by extension) ---
+SKIP_EXT = (".png", ".jpg", ".jpeg", ".gif", ".ico", ".db", ".sqlite", ".sqlite3",
+            ".pdf", ".docx", ".ttf", ".woff", ".woff2", ".mp4", ".zip", ".exe", ".dll", ".pyc")
+
+def run(cmd):
+    return subprocess.run(cmd, capture_output=True, text=True)
+
+# --- repo list: own work + forks combined (exclude the profile repo and the padding automation repo) ---
+out = run(["gh", "repo", "list", owner, "--limit", "300", "--json", "name,defaultBranchRef"])
+all_repos = json.loads(out.stdout or "[]")
+repos = [r for r in all_repos if r["name"] not in (owner, "daily-activity")]
+
+# --- load existing per-repo cache: {repo_name: {"sha": ..., "ext_totals": {...}}} ---
+if os.path.exists(cache_path):
+    with open(cache_path, encoding="utf-8") as f:
+        cache = json.load(f)
+else:
+    cache = {}
+
+changed, unchanged = [], []
+for r in repos:
+    name = r["name"]
+    branch = (r.get("defaultBranchRef") or {}).get("name") or "main"
+    sha_out = run(["gh", "api", f"repos/{owner}/{name}/commits/{branch}", "--jq", ".sha"])
+    sha = sha_out.stdout.strip()
+    if not sha:
+        continue
+    entry = cache.get(name)
+    if entry is not None and entry.get("sha") == sha:
+        unchanged.append(name)
+    else:
+        changed.append((name, branch, sha))
+
+print(f"{len(changed)} changed, {len(unchanged)} unchanged (cache hit)", file=sys.stderr)
+
+workdir = tempfile.mkdtemp()
+for name, branch, sha in changed:
+    dest = os.path.join(workdir, name)
+    url = f"https://x-access-token:{token}@github.com/{owner}/{name}.git"
+    clone = run(["git", "clone", "--depth", "1", "-q", url, dest])
+    ext_totals = defaultdict(int)
+    if clone.returncode == 0:
+        for root, dirs, files in os.walk(dest):
+            if ".git" in root.split(os.sep):
+                continue
+            for fn in files:
+                if fn.lower().endswith(SKIP_EXT):
+                    continue
+                path = os.path.join(root, fn)
+                try:
+                    with open(path, "rb") as fh:
+                        n = sum(1 for _ in fh)
+                except OSError:
+                    continue
+                if "." in fn and not fn.startswith("."):
+                    ext = fn.rsplit(".", 1)[-1]
+                elif fn.startswith(".") and fn.count(".") == 1:
+                    ext = fn[1:]
+                else:
+                    ext = "(no ext)"
+                ext_totals[ext] += n
+    else:
+        print(f"warn: failed to clone {name}", file=sys.stderr)
+    cache[name] = {"sha": sha, "ext_totals": dict(ext_totals)}
+shutil.rmtree(workdir, ignore_errors=True)
+
+# drop repos that no longer exist on GitHub
+live_names = {r["name"] for r in repos}
+for stale in [n for n in cache if n not in live_names]:
+    del cache[stale]
+
+with open(cache_path, "w", encoding="utf-8") as f:
+    json.dump(cache, f)
+
+# --- aggregate cached per-repo totals into one Lines-of-Code breakdown ---
 ext_totals = defaultdict(int)
 total = 0
-with open(lines_path, encoding="utf-8", errors="replace") as f:
-    for line in f:
-        line = line.rstrip("\n")
-        if not line.strip():
-            continue
-        parts = line.strip().split(None, 1)
-        if len(parts) != 2:
-            continue
-        try:
-            n = int(parts[0])
-        except ValueError:
-            continue
-        path = parts[1]
-        fname = path.rsplit("/", 1)[-1]
-        if "." in fname and not fname.startswith("."):
-            ext = fname.rsplit(".", 1)[-1]
-        elif fname.startswith(".") and fname.count(".") == 1:
-            ext = fname[1:]
-        else:
-            ext = "(no ext)"
+for entry in cache.values():
+    for ext, n in entry.get("ext_totals", {}).items():
         ext_totals[ext] += n
         total += n
 
@@ -76,6 +114,7 @@ for lang, n in top_lang:
 loc_block = "\n".join(loc_lines)
 
 # --- 3D-style pie chart (Excel-esque extruded ellipse) of the same top-10 breakdown ---
+import numpy as np
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
@@ -102,7 +141,6 @@ def draw_3d_pie(labels, sizes, colors, out_path, depth=0.09, squash=0.62):
         wedges_info.append((theta1, theta2, c))
         theta1 = theta2
 
-    # side "walls" for the front-facing arc, to fake extruded depth
     for (t1, t2, color) in wedges_info:
         n_samples = max(int(abs(t1 - t2)), 2)
         sample_angles = [t2 + (t1 - t2) * i / n_samples for i in range(n_samples + 1)]
@@ -116,13 +154,11 @@ def draw_3d_pie(labels, sizes, colors, out_path, depth=0.09, squash=0.62):
         dark = tuple(ch * 0.62 for ch in mcolors.to_rgb(color))
         ax.fill(xs_top + xs_bot, ys_top + ys_bot, color=dark, zorder=1, linewidth=0)
 
-    # top ellipse (squashed pie), drawn after the walls so it sits on top
     for (t1, t2, color) in wedges_info:
         w = Wedge((0, 0), 1, t2, t1, facecolor=color, edgecolor="white", linewidth=1.2, zorder=2)
         w.set_transform(Affine2D().scale(1, squash) + ax.transData)
         ax.add_patch(w)
 
-    # labels with percentage, placed just outside the rim
     for (t1, t2, color), s in zip(wedges_info, sizes):
         mid = np.radians((t1 + t2) / 2)
         lx, ly = np.cos(mid) * 1.18, np.sin(mid) * squash * 1.18
