@@ -39,20 +39,20 @@ Literal line counts (`wc -l`) across all repositories, own work + forks combined
 <img align="right" width="480" src="loc-chart.png" alt="Lines of Code breakdown, 3D pie chart">
 
 <!-- LOC-START -->
-![Total Code Size](https://img.shields.io/badge/Total_Code_Size-409%2C885%2C468_bytes-red?style=flat-square)
+![Total Lines of Code](https://img.shields.io/badge/Total_Lines_of_Code-21%2C152%2C287-red?style=flat-square)
 
-| Language | Bytes | Share |
+| Language | Lines | Share |
 |---|---|---|
-| Python | 139,304,260 | 34.0% |
-| TypeScript | 128,430,024 | 31.3% |
-| Jupyter Notebook | 65,172,203 | 15.9% |
-| Java | 13,817,824 | 3.4% |
-| JavaScript | 13,438,014 | 3.3% |
-| MDX | 11,824,728 | 2.9% |
-| Go | 9,067,295 | 2.2% |
-| PHP | 7,494,709 | 1.8% |
-| HTML | 4,354,723 | 1.1% |
-| Svelte | 3,758,414 | 0.9% |
+| py | 3,669,645 | 17.3% |
+| csv | 3,476,431 | 16.4% |
+| json | 2,341,694 | 11.1% |
+| ts | 2,042,853 | 9.7% |
+| tsx | 1,969,032 | 9.3% |
+| md | 916,648 | 4.3% |
+| ipynb | 719,536 | 3.4% |
+| model | 562,504 | 2.7% |
+| txt | 482,532 | 2.3% |
+| toml | 471,427 | 2.2% |
 <!-- LOC-END -->
 
 ---
