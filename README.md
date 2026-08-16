@@ -39,11 +39,11 @@ Literal line counts (`wc -l`) across all repositories, own work + forks combined
 <img align="right" width="480" src="loc-chart.png" alt="Lines of Code breakdown, 3D pie chart">
 
 <!-- LOC-START -->
-![Total Lines of Code](https://img.shields.io/badge/Total_Lines_of_Code-21%2C096%2C224-red?style=flat-square)
+![Total Lines of Code](https://img.shields.io/badge/Total_Lines_of_Code-21%2C096%2C276-red?style=flat-square)
 
 | Language | Lines | Share |
 |---|---|---|
-| py | 3,670,054 | 17.4% |
+| py | 3,670,106 | 17.4% |
 | csv | 3,476,462 | 16.5% |
 | json | 2,343,629 | 11.1% |
 | ts | 2,042,926 | 9.7% |
@@ -62,9 +62,9 @@ Literal line counts (`wc -l`) across all repositories, own work + forks combined
 Pull requests opened on other people's public repos (not forks — real upstream projects). Auto-refreshed daily.
 
 <!-- CONTRIB-START -->
-**Merged (2):** [squidKid-deluxe/QTradeX-Algo-Trading-SDK](https://github.com/squidKid-deluxe/QTradeX-Algo-Trading-SDK/pull/9) — fix: avoid spurious re-fetch of already-cached candles on end="now" startup, [squidKid-deluxe/QTradeX-Algo-Trading-SDK](https://github.com/squidKid-deluxe/QTradeX-Algo-Trading-SDK/pull/8) — feat: add Awesome Oscillator indicator
+**Merged (3):** [squidKid-deluxe/QTradeX-Algo-Trading-SDK](https://github.com/squidKid-deluxe/QTradeX-Algo-Trading-SDK/pull/9) — fix: avoid spurious re-fetch of already-cached candles on end="now" startup, [pkjmesra/PKScreener](https://github.com/pkjmesra/PKScreener/pull/314) — Add RSI(14) price divergence scanner (bullish/bearish), [squidKid-deluxe/QTradeX-Algo-Trading-SDK](https://github.com/squidKid-deluxe/QTradeX-Algo-Trading-SDK/pull/8) — feat: add Awesome Oscillator indicator
 
-**Open / pending review (13):** [51bitquant/binance_grid_trader](https://github.com/51bitquant/binance_grid_trader/pulls), [AI4Finance-Foundation/FinRL-Meta](https://github.com/AI4Finance-Foundation/FinRL-Meta/pulls), [AI4Finance-Foundation/FinRobot](https://github.com/AI4Finance-Foundation/FinRobot/pulls), [HammerGPT/Hyper-Alpha-Arena](https://github.com/HammerGPT/Hyper-Alpha-Arena/pulls), [al1enjesus/polymarket-whales](https://github.com/al1enjesus/polymarket-whales/pulls), [cunarist/solie](https://github.com/cunarist/solie/pulls) (x2), [diogomatoschaves/MyCryptoBot](https://github.com/diogomatoschaves/MyCryptoBot/pulls), [freqtrade/freqtrade](https://github.com/freqtrade/freqtrade/pulls), [himanshu2406/Algo.Py](https://github.com/himanshu2406/Algo.Py/pulls), [pkjmesra/PKScreener](https://github.com/pkjmesra/PKScreener/pulls) (x2), [whchien/ai-trader](https://github.com/whchien/ai-trader/pulls)
+**Open / pending review (12):** [51bitquant/binance_grid_trader](https://github.com/51bitquant/binance_grid_trader/pulls), [AI4Finance-Foundation/FinRL-Meta](https://github.com/AI4Finance-Foundation/FinRL-Meta/pulls), [AI4Finance-Foundation/FinRobot](https://github.com/AI4Finance-Foundation/FinRobot/pulls), [HammerGPT/Hyper-Alpha-Arena](https://github.com/HammerGPT/Hyper-Alpha-Arena/pulls), [al1enjesus/polymarket-whales](https://github.com/al1enjesus/polymarket-whales/pulls), [cunarist/solie](https://github.com/cunarist/solie/pulls) (x2), [diogomatoschaves/MyCryptoBot](https://github.com/diogomatoschaves/MyCryptoBot/pulls), [freqtrade/freqtrade](https://github.com/freqtrade/freqtrade/pulls), [himanshu2406/Algo.Py](https://github.com/himanshu2406/Algo.Py/pulls), [pkjmesra/PKScreener](https://github.com/pkjmesra/PKScreener/pulls), [whchien/ai-trader](https://github.com/whchien/ai-trader/pulls)
 <!-- CONTRIB-END -->
 
 ---
