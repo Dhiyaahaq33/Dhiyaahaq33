@@ -27,6 +27,7 @@ Deploying real systems, not just notebooks.
 | **FUTURE-MARKET** *(private)* | Flask · ccxt · Telegram Bot API | Futures price prediction & alert bot |
 | **[MPD-SAG](https://github.com/Dhiyaahaq33/MPD-SAG)** | Python · C++ · MediaPipe · MQTT | Gesture-triggered smart agriculture IoT demo — vision-based activation, live NDVI panel |
 | **binance-intelligence**, **automatic_trade**, **bandar-broksum** *(private)* | Python | Crypto & equity market-intelligence utilities |
+| **[bandar-broksum-dashboard](https://github.com/Dhiyaahaq33/bandar-broksum-dashboard)** | HTML/CSS/JS (single-file) | Front-end for `bandar-broksum` — search/filter daily IDX bandarmology broker-summary signals |
 | **[charcoal-outreach](https://github.com/Dhiyaahaq33/charcoal-outreach)** | Python · GitHub Actions · Google Sheets · WhatsApp/Email | Cloud-only outreach bot for charcoal export leads — runs on a schedule, no PC required |
 | **woodchar-sales-tracker** *(private)* | Next.js · Supabase | Internal closed-deal tracker for PT Cahaya Woodchar International (2-user tool) |
 | **claude-chatbot** *(private)* | Next.js · Vercel AI SDK | Streaming chatbot with swappable LLM provider |
