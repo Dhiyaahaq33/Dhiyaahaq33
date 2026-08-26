@@ -45,20 +45,20 @@ Literal line counts (`wc -l`) across all repositories, own work + forks combined
 <img align="right" width="480" src="loc-chart.png" alt="Lines of Code breakdown, 3D pie chart">
 
 <!-- LOC-START -->
-![Total Lines of Code](https://img.shields.io/badge/Total_Lines_of_Code-21%2C219%2C186-red?style=flat-square)
+![Total Lines of Code](https://img.shields.io/badge/Total_Lines_of_Code-21%2C219%2C976-red?style=flat-square)
 
 | Language | Lines | Share |
 |---|---|---|
-| py | 3,683,250 | 17.4% |
+| py | 3,683,815 | 17.4% |
 | csv | 3,476,462 | 16.4% |
-| json | 2,379,209 | 11.2% |
+| json | 2,379,210 | 11.2% |
 | ts | 2,045,742 | 9.6% |
 | tsx | 1,976,778 | 9.3% |
 | md | 921,579 | 4.3% |
 | ipynb | 719,624 | 3.4% |
 | model | 562,505 | 2.7% |
 | toml | 471,849 | 2.2% |
-| txt | 411,718 | 1.9% |
+| txt | 411,720 | 1.9% |
 <!-- LOC-END -->
 
 ---
